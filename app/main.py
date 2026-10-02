@@ -6,7 +6,7 @@ import os
 import shlex
 
 def echo(text):
-    print(text)
+    print(' '.join(text))
 
 def type(command):
     if command in ['echo', 'exit', 'type', 'pwd', 'cd']:
