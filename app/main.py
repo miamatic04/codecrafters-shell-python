@@ -26,7 +26,7 @@ def main():
         elif (command[0:4] == "type"):
             type(command[5:])
         elif(shutil.which(command_exe)):
-            subprocess.run(command.split(' ', 1))
+            subprocess.run(command.split(' '))
         else:
             print(f'{command}: command not found')
     pass
