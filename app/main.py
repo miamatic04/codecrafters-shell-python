@@ -19,34 +19,41 @@ def pwd():
     print(pathlib.Path().resolve())
 
 def cd(new_path):
-    if new_path.startswith("/"):
-        if os.path.exists(new_path) and os.path.isdir(new_path):
-            os.chdir(new_path)
-        else:
-            print(f"cd: {new_path}: No such file or directory")
+    if not new_path or new_path == "~":
+        new_path = pathlib.Path.home()
     else:
-        print(f'cd: {new_path}: No such file or directory')
+        new_path = pathlib.Path(new_path).expanduser()
+
+    try:
+        os.chdir(new_path)
+    except FileNotFoundError:
+        print(f"cd: {new_path}: No such file or directory")
+    except NotADirectoryError:
+        print(f"cd: {new_path}: Not a directory")
+    except PermissionError:
+        print(f"cd: {new_path}: Permission denied")
 
 def main():
     while(True):
         sys.stdout.write("$ ")
         command = input()
-        command_exe = command.split(' ', 1)[0]
-        if (command == "exit"):
+        command_exe, *rest = command.split(' ', 1)
+        args = rest[0] if rest else ""
+
+        if command_exe == "exit":
             break
-        elif (command[0:4] == "echo"):
-            echo(command[5:])
-        elif (command[0:4] == "type"):
-            type(command[5:])
+        elif command_exe == "echo":
+            echo(args)
+        elif command_exe == "type":
+            type(args)
+        elif command_exe == "pwd":
+            pwd()
+        elif command_exe == "cd":
+            cd(args)
         elif(shutil.which(command_exe)):
             subprocess.run(command.split(' '))
-        elif(command[0:3] == "pwd"):
-            pwd()
-        elif (command[0:2] == "cd"):
-            cd(command[3:])
         else:
             print(f'{command}: command not found')
-    pass
 
 
 if __name__ == "__main__":
