@@ -3,6 +3,7 @@ import shutil
 import subprocess
 import pathlib
 import os
+import re
 
 def echo(text):
     print(text)
@@ -39,6 +40,12 @@ def main():
         command = input()
         command_exe, *rest = command.split(' ', 1)
         args = rest[0] if rest else ""
+
+        pattern1 = '([^ \']+)' #without quotes?
+        pattern2 = '\'([^\']*)\'' #within quotes
+
+        tokens = [m1 or m2 for m1, m2 in re.findall(pattern1 + '|' + pattern2, args)]
+        args = ' '.join(tokens)
 
         if command_exe == "exit":
             break
