@@ -44,6 +44,7 @@ def main():
         pattern1 = '([^ \']+)' 
         pattern2 = '\'([^\']*)\'' 
 
+        tokens = []
         prev_end = None
         for m in re.finditer(pattern1 + '|' + pattern2, args):
             content = m.group(1) or m.group(2)
