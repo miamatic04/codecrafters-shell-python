@@ -1,6 +1,7 @@
 import sys
 import shutil
 import subprocess
+import pathlib
 
 def echo(text):
     print(text)
@@ -13,6 +14,8 @@ def type(command):
     else:
         print(f'{command}: not found')
 
+def pwd():
+    print(pathlib.Path().resolve())
 
 def main():
     while(True):
@@ -27,6 +30,8 @@ def main():
             type(command[5:])
         elif(shutil.which(command_exe)):
             subprocess.run(command.split(' '))
+        elif(command[0:3] == "pwd"):
+            pwd()
         else:
             print(f'{command}: command not found')
     pass
