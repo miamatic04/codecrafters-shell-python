@@ -50,11 +50,11 @@ def main():
         elif command_exe == "echo":
             echo(args)
         elif command_exe == "type":
-            type(args)
+            type(args[0])
         elif command_exe == "pwd":
             pwd()
         elif command_exe == "cd":
-            cd(args)
+            cd(args[0])
         elif(shutil.which(command_exe)):
             subprocess.run([command_exe] + args)
         else:
