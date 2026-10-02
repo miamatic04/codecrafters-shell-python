@@ -1,5 +1,8 @@
 import sys
 
+def echo(text):
+    print(text)
+
 
 def main():
     while(True):
@@ -7,7 +10,10 @@ def main():
         command = input()
         if (command == "exit"):
             break
-        print(f'{command}: command not found')
+        elif (command[0:4] == "echo"):
+            echo(command[5:])
+        else:
+            print(f'{command}: command not found')
     pass
 
 
