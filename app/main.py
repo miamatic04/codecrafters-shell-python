@@ -1,4 +1,5 @@
 import sys
+import shutil
 
 def echo(text):
     print(text)
@@ -6,6 +7,8 @@ def echo(text):
 def type(command):
     if command in ['echo', 'exit', 'type']:
         print(f'{command} is a shell builtin')
+    elif path := shutil.which(command):
+        print(f'{command} is {path}')
     else:
         print(f'{command}: not found')
 
