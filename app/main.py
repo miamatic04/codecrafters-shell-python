@@ -7,7 +7,7 @@ def type(command):
     if command in ['echo', 'exit', 'type']:
         print(f'{command} is a shell builtin')
     else:
-        print(f'{command}: command not found')
+        print(f'{command}: not found')
 
 
 def main():
