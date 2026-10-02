@@ -41,10 +41,20 @@ def main():
         command_exe, *rest = command.split(' ', 1)
         args = rest[0] if rest else ""
 
-        pattern1 = '([^ \']+)' #without quotes?
-        pattern2 = '\'([^\']*)\'' #within quotes
+        pattern1 = '([^ \']+)' 
+        pattern2 = '\'([^\']*)\'' 
 
-        tokens = [m1 or m2 for m1, m2 in re.findall(pattern1 + '|' + pattern2, args)]
+        tokens = [m1 or m2 for m1, m2 in re.finditer(pattern1 + '|' + pattern2, args)]
+
+        prev_end = None
+        for m in re.finditer(pattern1 + '|' + pattern2, args):
+            content = m.group(1) or m.group(2)
+            if prev_end is not None and m.start() == prev_end:
+                tokens[-1] += content
+            else:
+                tokens.append(content)
+            prev_end = m.end()
+
         args = ' '.join(tokens)
 
         if command_exe == "exit":
