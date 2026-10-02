@@ -37,10 +37,13 @@ def cd(new_path):
 def main():
     while(True):
         sys.stdout.write("$ ")
+        sys.stdout.flush()
         command = input()
-        split = shlex.split(command)
-        command_exe = split[0]
-        args = split[1:] if split else ""
+        if not command.strip():
+            continue
+        args = shlex.split(command)
+        command_exe = args[0]
+        args = args[1:]
 
         if command_exe == "exit":
             break
@@ -53,7 +56,7 @@ def main():
         elif command_exe == "cd":
             cd(args)
         elif(shutil.which(command_exe)):
-            subprocess.run(command.split(' '))
+            subprocess.run(args)
         else:
             print(f'{command}: command not found')
 
