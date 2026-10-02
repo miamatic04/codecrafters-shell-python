@@ -56,7 +56,7 @@ def main():
         elif command_exe == "cd":
             cd(args)
         elif(shutil.which(command_exe)):
-            subprocess.run(args)
+            subprocess.run([command_exe] + args)
         else:
             print(f'{command}: command not found')
 
