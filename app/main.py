@@ -7,7 +7,7 @@ def echo(text):
     print(text)
 
 def type(command):
-    if command in ['echo', 'exit', 'type']:
+    if command in ['echo', 'exit', 'type', 'pwd']:
         print(f'{command} is a shell builtin')
     elif path := shutil.which(command):
         print(f'{command} is {path}')
